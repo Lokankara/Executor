@@ -70,7 +70,7 @@ public class Scenario implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("ScenarioDto{name='%s', site='%s', steps=%s}",
+        return String.format("Scenario{name='%s', site='%s', steps=%s}",
                              name,
                              site,
                              steps);
