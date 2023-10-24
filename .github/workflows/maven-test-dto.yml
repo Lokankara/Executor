@@ -1,0 +1,52 @@
+name: Build and Test Report
+
+on:
+  push:
+    branches:
+      - test-dto
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+
+      - name: Build with Maven
+        run: mvn clean install jacoco:report
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: jacoco
+          path: target/site/jacoco/jacoco.xml
+
+  coverage-report:
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download coverage report
+        uses: actions/download-artifact@v2
+        with:
+          name: jacoco
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+
+      - name: Publish coverage report to Codecov
+        run: bash <(curl -s https://codecov.io/bash)
