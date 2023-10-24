@@ -7,16 +7,15 @@ public class ThreadPoolConfig
         implements Serializable {
 
     private static final long serialVersionUID = 1234567L;
-
-    Integer corePoolSize;
-    Long keepAliveTime;
+    private Integer corePoolSize;
+    private Long keepAliveTime;
 
     public ThreadPoolConfig() {
     }
 
     public ThreadPoolConfig(
-            Integer corePoolSize,
-            Long keepAliveTime) {
+            final Integer corePoolSize,
+            final Long keepAliveTime) {
         this.corePoolSize = corePoolSize;
         this.keepAliveTime = keepAliveTime;
     }
@@ -25,7 +24,8 @@ public class ThreadPoolConfig
         return corePoolSize;
     }
 
-    public void setCorePoolSize(Integer corePoolSize) {
+    public void setCorePoolSize(
+            final Integer corePoolSize) {
         this.corePoolSize = corePoolSize;
     }
 
@@ -33,32 +33,41 @@ public class ThreadPoolConfig
         return keepAliveTime;
     }
 
-    public void setKeepAliveTime(Long keepAliveTime) {
+    public void setKeepAliveTime(
+            final Long keepAliveTime) {
         this.keepAliveTime = keepAliveTime;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ThreadPoolConfig that = (ThreadPoolConfig) o;
 
-        if (!Objects.equals(corePoolSize, that.corePoolSize)) return false;
+        if (!Objects.equals(corePoolSize, that.corePoolSize)) {
+            return false;
+        }
         return Objects.equals(keepAliveTime, that.keepAliveTime);
     }
 
     @Override
     public int hashCode() {
-        int result = corePoolSize != null ? corePoolSize.hashCode() : 0;
-        result = 31 * result + (keepAliveTime != null ? keepAliveTime.hashCode() : 0);
-        return result;
+        int result = corePoolSize != null
+                     ? corePoolSize.hashCode()
+                     : 0;
+        return 31 * result + (keepAliveTime != null
+                              ? keepAliveTime.hashCode()
+                              : 0);
     }
 
     @Override
     public String toString() {
-        return String.format(
-                "ThreadPoolConfig{corePoolSize=%d, keepAliveTime=%d}",
+        return String.format("{corePoolSize=%d, keepAliveTime=%d}",
                 corePoolSize,
                 keepAliveTime);
     }

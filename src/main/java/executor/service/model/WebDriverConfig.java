@@ -7,19 +7,19 @@ public class WebDriverConfig
         implements Serializable {
 
     private static final long serialVersionUID = 7654321L;
-    String webDriverExecutable;
-    String userAgent;
-    Long pageLoadTimeout;
-    Long implicitlyWait;
+    private String webDriverExecutable;
+    private String userAgent;
+    private Long pageLoadTimeout;
+    private Long implicitlyWait;
 
     public WebDriverConfig() {
     }
 
     public WebDriverConfig(
-            String webDriverExecutable,
-            String userAgent,
-            Long pageLoadTimeout,
-            Long implicitlyWait) {
+            final String webDriverExecutable,
+            final String userAgent,
+            final Long pageLoadTimeout,
+            final Long implicitlyWait) {
         this.webDriverExecutable = webDriverExecutable;
         this.userAgent = userAgent;
         this.pageLoadTimeout = pageLoadTimeout;
@@ -30,7 +30,8 @@ public class WebDriverConfig
         return webDriverExecutable;
     }
 
-    public void setWebDriverExecutable(String webDriverExecutable) {
+    public void setWebDriverExecutable(
+            final String webDriverExecutable) {
         this.webDriverExecutable = webDriverExecutable;
     }
 
@@ -38,7 +39,8 @@ public class WebDriverConfig
         return userAgent;
     }
 
-    public void setUserAgent(String userAgent) {
+    public void setUserAgent(
+            final String userAgent) {
         this.userAgent = userAgent;
     }
 
@@ -46,7 +48,8 @@ public class WebDriverConfig
         return pageLoadTimeout;
     }
 
-    public void setPageLoadTimeout(Long pageLoadTimeout) {
+    public void setPageLoadTimeout(
+            final Long pageLoadTimeout) {
         this.pageLoadTimeout = pageLoadTimeout;
     }
 
@@ -54,38 +57,48 @@ public class WebDriverConfig
         return implicitlyWait;
     }
 
-    public void setImplicitlyWait(Long implicitlyWait) {
+    public void setImplicitlyWait(
+            final Long implicitlyWait) {
         this.implicitlyWait = implicitlyWait;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        WebDriverConfig that = (WebDriverConfig) o;
-
-        if (!Objects.equals(webDriverExecutable, that.webDriverExecutable))
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
-        if (!Objects.equals(userAgent, that.userAgent)) return false;
-        if (!Objects.equals(pageLoadTimeout, that.pageLoadTimeout))
-            return false;
-        return Objects.equals(implicitlyWait, that.implicitlyWait);
+        }
+        WebDriverConfig that = (WebDriverConfig) obj;
+        return Objects.equals(
+                webDriverExecutable, that.webDriverExecutable)
+                && Objects.equals(userAgent, that.userAgent)
+                && Objects.equals(pageLoadTimeout, that.pageLoadTimeout)
+                && Objects.equals(implicitlyWait, that.implicitlyWait);
     }
 
     @Override
     public int hashCode() {
-        int result = webDriverExecutable != null ? webDriverExecutable.hashCode() : 0;
-        result = 31 * result + (userAgent != null ? userAgent.hashCode() : 0);
-        result = 31 * result + (pageLoadTimeout != null ? pageLoadTimeout.hashCode() : 0);
-        result = 31 * result + (implicitlyWait != null ? implicitlyWait.hashCode() : 0);
+        int result = webDriverExecutable != null
+                     ? webDriverExecutable.hashCode()
+                     : 0;
+        result = 31 * result + (userAgent != null
+                                ? userAgent.hashCode()
+                                : 0);
+        result = 31 * result + (pageLoadTimeout != null
+                                ? pageLoadTimeout.hashCode()
+                                : 0);
+        result = 31 * result + (implicitlyWait != null
+                                ? implicitlyWait.hashCode()
+                                : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "WebDriverConfig{webDriverExecutable='%s', userAgent='%s', pageLoadTimeout=%d, implicitlyWait=%d}",
+                "{webDriverExecutable='%s', userAgent='%s', pageLoadTimeout=%d, implicitlyWait=%d}",
                 webDriverExecutable,
                 userAgent,
                 pageLoadTimeout,

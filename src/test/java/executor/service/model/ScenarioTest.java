@@ -24,8 +24,8 @@ public class ScenarioTest {
     public void setUp() {
         stepsA.add(new Step("up", "a"));
         stepsB.add(new Step("down", "b"));
-        a = new Scenario("Test Scenario A", "Test Site A", stepsA);
-        b = new Scenario("Test Scenario B", "Test Site B", stepsB);
+        a = new Scenario("Scenario A", "Site A", stepsA);
+        b = new Scenario("Scenario B", "Site B", stepsB);
     }
 
     @Test
@@ -53,9 +53,7 @@ public class ScenarioTest {
     @Test
     @DisplayName("Given Scenario instances A and B with the same name, site, and empty steps, when equals is called, then they should be equal")
     public void testEquals_EqualScenarios() {
-        Scenario aClone = new Scenario("Test Scenario A",
-                                       "Test Site A",
-                                       stepsA);
+        Scenario aClone = new Scenario("Scenario A", "Site A", stepsA);
         assertTrue(a.equals(aClone));
     }
 
@@ -68,9 +66,7 @@ public class ScenarioTest {
     @Test
     @DisplayName("Given Scenario instances A and A clone with the same name, site, and empty steps, when hashCode is called, then they should have the same hash code")
     public void testHashCode() {
-        Scenario aClone = new Scenario("Test Scenario A",
-                                       "Test Site A",
-                                       stepsA);
+        Scenario aClone = new Scenario("Scenario A", "Site A", stepsA);
         assertEquals(a.hashCode(), aClone.hashCode());
     }
 
@@ -78,7 +74,7 @@ public class ScenarioTest {
     @DisplayName("Given a Scenario instance A with steps, when toString is called, then it should return the expected string representation")
     public void testToString() {
         a.getSteps().add(new Step("up", "a"));
-        String expected = "Scenario{name='Test Scenario A', site='Test Site A', steps=[Step{action='up', value='a'}, Step{action='up', value='a'}]}";
+        String expected = "{name='Scenario A', site='Site A', steps=[{action='up', value='a'}, {action='up', value='a'}]}";
         assertEquals(expected, a.toString());
     }
 
@@ -97,7 +93,7 @@ public class ScenarioTest {
     @Test
     @DisplayName("Given Scenario instances A and B with different sites, when equals is called, then they should not be equal")
     public void testEquals_DifferentScenarioSites() {
-        b.setSite("Test Site A");
+        b.setSite("Site A");
         assertNotEquals(a, b);
     }
 
@@ -111,9 +107,7 @@ public class ScenarioTest {
     @Test
     @DisplayName("Given Scenario instance A with steps and instance B without steps, when equals is called, then they should not be equal")
     public void testEquals_ScenarioWithAndWithoutSteps() {
-        Scenario c = new Scenario("Test Scenario C",
-                                  "Test Site C",
-                                  new ArrayList<>());
+        Scenario c = new Scenario("Scenario C", "Site C", new ArrayList<>());
         assertNotEquals(a, c);
     }
 }

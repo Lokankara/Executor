@@ -1,0 +1,6 @@
+{
+  "webDriverExecutable": "path",
+  "userAgent": "userAgent",
+  "pageLoadTimeout": 10,
+  "implicitlyWait": 20
+}

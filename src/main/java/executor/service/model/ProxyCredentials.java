@@ -7,15 +7,15 @@ public class ProxyCredentials
         implements Serializable {
 
     private static final long serialVersionUID = 321L;
-    String username;
-    String password;
+    private String username;
+    private String password;
 
     public ProxyCredentials() {
     }
 
     public ProxyCredentials(
-            String username,
-            String password) {
+            final String username,
+            final String password) {
         this.username = username;
         this.password = password;
     }
@@ -24,7 +24,8 @@ public class ProxyCredentials
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(
+            final String username) {
         this.username = username;
     }
 
@@ -32,32 +33,42 @@ public class ProxyCredentials
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(
+            final String password) {
         this.password = password;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ProxyCredentials that = (ProxyCredentials) o;
 
-        if (!Objects.equals(username, that.username)) return false;
+        if (!Objects.equals(username, that.username)) {
+            return false;
+        }
         return Objects.equals(password, that.password);
     }
 
     @Override
     public int hashCode() {
-        int result = username != null ? username.hashCode() : 0;
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        return result;
+        int result = username != null
+                     ? username.hashCode()
+                     : 0;
+        return 31 * result + (password != null
+                              ? password.hashCode()
+                              : 0);
     }
 
     @Override
     public String toString() {
-        return String.format("ProxyCredentials{username='%s', password='%s'}",
-                             username,
-                             password);
+        return String.format("{username='%s', password='%s'}",
+                username,
+                password);
     }
 }

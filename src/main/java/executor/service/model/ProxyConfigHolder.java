@@ -7,15 +7,15 @@ public class ProxyConfigHolder
         implements Serializable {
 
     private static final long serialVersionUID = 123L;
-    ProxyNetworkConfig proxyNetworkConfig;
-    ProxyCredentials proxyCredentials;
+    private ProxyNetworkConfig proxyNetworkConfig;
+    private ProxyCredentials proxyCredentials;
 
     public ProxyConfigHolder() {
     }
 
     public ProxyConfigHolder(
-            ProxyNetworkConfig proxyNetworkConfig,
-            ProxyCredentials proxyCredentials) {
+            final ProxyNetworkConfig proxyNetworkConfig,
+            final ProxyCredentials proxyCredentials) {
         this.proxyNetworkConfig = proxyNetworkConfig;
         this.proxyCredentials = proxyCredentials;
     }
@@ -24,7 +24,8 @@ public class ProxyConfigHolder
         return proxyNetworkConfig;
     }
 
-    public void setProxyNetworkConfig(ProxyNetworkConfig proxyNetworkConfig) {
+    public void setProxyNetworkConfig(
+            final ProxyNetworkConfig proxyNetworkConfig) {
         this.proxyNetworkConfig = proxyNetworkConfig;
     }
 
@@ -32,7 +33,8 @@ public class ProxyConfigHolder
         return proxyCredentials;
     }
 
-    public void setProxyCredentials(ProxyCredentials proxyCredentials) {
+    public void setProxyCredentials(
+            final ProxyCredentials proxyCredentials) {
         this.proxyCredentials = proxyCredentials;
     }
 
@@ -43,22 +45,25 @@ public class ProxyConfigHolder
 
         ProxyConfigHolder that = (ProxyConfigHolder) o;
 
-        if (!Objects.equals(proxyNetworkConfig, that.proxyNetworkConfig))
+        if (!Objects.equals(proxyNetworkConfig, that.proxyNetworkConfig)) {
             return false;
+        }
         return Objects.equals(proxyCredentials, that.proxyCredentials);
     }
 
     @Override
     public int hashCode() {
-        int result = proxyNetworkConfig != null ? proxyNetworkConfig.hashCode() : 0;
-        result = 31 * result + (proxyCredentials != null ? proxyCredentials.hashCode() : 0);
-        return result;
+        int result = proxyNetworkConfig != null
+                     ? proxyNetworkConfig.hashCode()
+                     : 0;
+        return 31 * result + (proxyCredentials != null
+                              ? proxyCredentials.hashCode()
+                              : 0);
     }
 
     @Override
     public String toString() {
-        return String.format(
-                "ProxyConfigHolder{proxyNetworkConfig=%s, proxyCredentials=%s}",
+        return String.format("{proxyNetworkConfig=%s, proxyCredentials=%s}",
                 proxyNetworkConfig,
                 proxyCredentials);
     }

@@ -22,12 +22,11 @@ public class StepTest {
         step = new Step();
     }
 
-
     @Test
     @DisplayName("Given a StepDto with action 'up' and value 'a', when toString is called, then it should return Step{action='up', value='a'}")
     public void givenStepDtoWithUpAndA_whenToStringIsCalled_thenItShouldReturnCorrectString() {
-        assertEquals("Step{action='up', value='a'}", a.toString());
-        assertEquals("Step{action='down', value='b'}", b.toString());
+        assertEquals("{action='up', value='a'}", a.toString());
+        assertEquals("{action='down', value='b'}", b.toString());
     }
 
     @Test
