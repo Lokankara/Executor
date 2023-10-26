@@ -1,17 +1,19 @@
 package executor.service;
 
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import static executor.service.service.facade.ServiceFactory.createServiceFacade;
+import static executor.service.service.webdriver.WebDriverManager.create;
 
 public class App {
-    private static final Logger logger = Logger.getLogger(App.class.getName());
+    private static final String PROXY_FILE = "proxy.properties";
+    private static final String WEBDRIVER_FILE = "web-driver.properties";
+    private static final Logger LOGGER = LogManager.getLogger(App.class);
 
     public static void main(String[] args) {
-        ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setLevel(Level.INFO);
-        logger.addHandler(consoleHandler);
-        logger.setLevel(Level.INFO);
-        logger.info("Application started.");
+        create(WEBDRIVER_FILE, PROXY_FILE);
+        createServiceFacade();
+        LOGGER.info("Application started.");
     }
 }
