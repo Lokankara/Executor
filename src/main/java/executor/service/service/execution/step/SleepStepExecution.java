@@ -1,4 +1,4 @@
-package executor.service.service.execution;
+package executor.service.service.execution.step;
 
 import executor.service.exception.StepExecutionInterruptedException;
 import executor.service.model.Step;
@@ -8,7 +8,6 @@ public class SleepStepExecution
         implements StepExecution {
 
     private final String stepAction;
-
 
     public SleepStepExecution(
             final String stepAction) {

@@ -2,6 +2,8 @@ package executor.service.service.execution;
 
 import executor.service.model.Scenario;
 import executor.service.model.Step;
+import executor.service.service.execution.step.StepExecution;
+import executor.service.service.execution.step.StepExecutionType;
 import org.openqa.selenium.WebDriver;
 
 public class ScenarioExecutor

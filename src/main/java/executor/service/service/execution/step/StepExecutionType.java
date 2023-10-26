@@ -1,8 +1,8 @@
-package executor.service.service.execution;
+package executor.service.service.execution.step;
 
 import java.util.Arrays;
 
-import static executor.service.service.execution.Action.*;
+import static executor.service.service.execution.step.Action.*;
 
 public enum StepExecutionType {
     CLICK_XPATH(new ClickXpathStepExecution(CLICK_XPATH_ACTION)),
