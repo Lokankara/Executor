@@ -1,24 +1,24 @@
 package executor.service.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class WebDriverConfigTest {
+class WebDriverConfigTest {
 
     private WebDriverConfig config1;
     private WebDriverConfig config2;
     private ObjectMapper objectMapper;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         objectMapper = new ObjectMapper();
         config1 = new WebDriverConfig("path", "userAgent", 10L, 20L);
         config2 = new WebDriverConfig("path2", "userAgent2", 15L, 25L);
@@ -26,7 +26,7 @@ public class WebDriverConfigTest {
 
     @Test
     @DisplayName("Given WebDriverConfig instances with different values, when using getters, then they should return the correct values")
-    public void testGetters() {
+    void testGetters() {
         assertEquals("path", config1.getWebDriverExecutable());
         assertEquals("userAgent", config1.getUserAgent());
         assertEquals(10L, (long) config1.getPageLoadTimeout());
@@ -40,7 +40,7 @@ public class WebDriverConfigTest {
 
     @Test
     @DisplayName("Given equal WebDriverConfig instances, when testing equality, then they should be considered equal")
-    public void testEquals_EqualConfigs() {
+    void testEquals_EqualConfigs() {
         WebDriverConfig config1 = new WebDriverConfig("path",
                 "userAgent",
                 10L,
@@ -54,13 +54,13 @@ public class WebDriverConfigTest {
 
     @Test
     @DisplayName("Given different WebDriverConfig instances, when testing equality, then they should not be considered equal")
-    public void testEquals_DifferentConfigs() {
+    void testEquals_DifferentConfigs() {
         assertFalse(config1.equals(config2));
     }
 
     @Test
     @DisplayName("Given equal WebDriverConfig instances, when calculating the hash code, then it should be the same")
-    public void testHashCode() {
+    void testHashCode() {
         WebDriverConfig config1Clone = new WebDriverConfig("path",
                 "userAgent",
                 10L,
@@ -70,7 +70,7 @@ public class WebDriverConfigTest {
 
     @Test
     @DisplayName("Given a WebDriverConfig instance, when calling toString, then it should return the expected JSON string")
-    public void testToString()
+    void testToString()
             throws IOException {
         WebDriverConfig expected = objectMapper.readValue(getClass()
                 .getClassLoader()
@@ -82,7 +82,7 @@ public class WebDriverConfigTest {
 
     @Test
     @DisplayName("Test WebDriverConfig setters and getters")
-    public void testSettersAndGetters() {
+    void testSettersAndGetters() {
         WebDriverConfig config = new WebDriverConfig();
         config.setWebDriverExecutable("path");
         config.setUserAgent("userAgent");

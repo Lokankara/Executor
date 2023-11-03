@@ -11,7 +11,6 @@ public class ExecutionService {
 
     private Queue<Scenario> scenarioQueue = new LinkedBlockingQueue<>();
 
-
     public void execute(
             final WebDriver webDriver,
             final ScenarioSourceListener scenarioSourceListener,

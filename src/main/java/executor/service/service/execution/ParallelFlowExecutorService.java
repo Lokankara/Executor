@@ -2,10 +2,8 @@ package executor.service.service.execution;
 
 import executor.service.model.Scenario;
 import executor.service.model.ThreadPoolConfig;
-import executor.service.service.execution.Executor;
 import org.openqa.selenium.WebDriver;
 
-import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -33,6 +31,7 @@ public class ParallelFlowExecutorService {
             final Executor executorInstance,
             final Scenario scenario,
             final WebDriver webDriver) {
-        threadPoolExecutor.execute(() -> executorInstance.execute(scenario, webDriver));
+        threadPoolExecutor.execute(() -> executorInstance
+                .execute(scenario, webDriver));
     }
 }

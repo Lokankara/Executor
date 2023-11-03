@@ -1,12 +1,8 @@
 package executor.service.model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class ProxyNetworkConfig
-        implements Serializable {
-
-    private static final long serialVersionUID = 1234567L;
+public class ProxyNetworkConfig {
     private String hostname;
     private Integer port;
 
@@ -67,6 +63,8 @@ public class ProxyNetworkConfig
 
     @Override
     public String toString() {
-        return String.format("{hostname='%s', port=%d}", hostname, port);
+        return String.format(
+                "{hostname='%s', port=%d}",
+                hostname, port);
     }
 }

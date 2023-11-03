@@ -18,7 +18,7 @@ public class ScenarioExecutor
         }
     }
 
-    private StepExecution getStepExecution(
+    protected StepExecution getStepExecution(
             final String action) {
         return StepExecutionType.fromString(action)
                 .getStepExecution();

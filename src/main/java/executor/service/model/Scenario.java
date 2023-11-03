@@ -1,13 +1,9 @@
 package executor.service.model;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Scenario
-        implements Serializable {
-
-    private static final long serialVersionUID = 12345L;
+public class Scenario {
     private String name;
     private String site;
     private List<Step> steps;
@@ -87,9 +83,8 @@ public class Scenario
 
     @Override
     public String toString() {
-        return String.format("{name='%s', site='%s', steps=%s}",
-                name,
-                site,
-                steps);
+        return String.format(
+                "{name='%s', site='%s', steps=%s}",
+                name, site, steps);
     }
 }

@@ -1,12 +1,8 @@
 package executor.service.model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class WebDriverConfig
-        implements Serializable {
-
-    private static final long serialVersionUID = 7654321L;
+public class WebDriverConfig {
     private String webDriverExecutable;
     private String userAgent;
     private Long pageLoadTimeout;

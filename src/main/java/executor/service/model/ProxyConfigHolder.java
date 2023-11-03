@@ -1,12 +1,10 @@
 package executor.service.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ProxyConfigHolder
-        implements Serializable {
-
-    private static final long serialVersionUID = 123L;
+public class ProxyConfigHolder {
     private ProxyNetworkConfig proxyNetworkConfig;
     private ProxyCredentials proxyCredentials;
 

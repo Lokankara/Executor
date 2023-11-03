@@ -11,7 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 public enum Browser
-        implements Initializer {
+        implements BrowserInitializer {
     CHROME {
         @Override
         public WebDriver init(

@@ -1,4 +1,4 @@
-package executor.service.service.facade;
+package executor.service.service.webdriver;
 
 import executor.service.model.WebDriverConfig;
 import org.openqa.selenium.WebDriver;
