@@ -9,18 +9,21 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WebDriverInitializerFactory
         implements WebDriverInitializer {
 
+    private static final String PROXY_FILE = "proxy.properties";
+    private static final String WEBDRIVER_FILE = "web-driver.properties";
+
     private WebDriverConfig config;
     private ProxyConfigHolder holder;
     private ConfigurationLoader loader;
-    private static final ConcurrentHashMap<WebDriverConfig, WebDriverInitializerFactory> INSTANCES
-            = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<WebDriverConfig, WebDriverInitializerFactory>
+            INSTANCES = new ConcurrentHashMap<>();
 
     private static class Holder {
         private static final WebDriverInitializerFactory INSTANCE =
                 new WebDriverInitializerFactory();
     }
 
-    private WebDriverInitializerFactory() {
+    public WebDriverInitializerFactory() {
         this.config = new WebDriverConfig();
         this.holder = new ProxyConfigHolder();
         this.loader = new ConfigurationLoader();
@@ -44,21 +47,25 @@ public class WebDriverInitializerFactory
         return INSTANCES.computeIfAbsent(
                 config, WebDriverInitializerFactory::new);
     }
+
     public static WebDriverInitializerFactory getInstance() {
         return Holder.INSTANCE;
     }
 
-    public WebDriver init(
-            final Browser browser) {
-        return browser.init(config, holder);
+    public WebDriver init(Browser browser) {
+        WebDriverFactory webDriverFactory = new WebDriverFactory();
+        return switch (browser) {
+            case CHROME -> webDriverFactory.initChromeDriver();
+            case FIREFOX -> webDriverFactory.initFirefoxDriver();
+            default -> throw new IllegalArgumentException(
+                    "Unsupported browser: " + browser);
+        };
     }
 
     @Override
-    public WebDriverInitializer create(
-            final String webdriverConfigPath,
-            final String proxyConfigHolderPath) {
-        config = loader.loadWebDriverConfig(webdriverConfigPath);
-        holder = loader.loadProxyConfig(proxyConfigHolderPath);
+    public WebDriverInitializer create() {
+        config = loader.loadWebDriverConfig(WEBDRIVER_FILE);
+        holder = loader.loadProxyConfig(PROXY_FILE);
         return new WebDriverInitializerFactory(config, holder);
     }
 

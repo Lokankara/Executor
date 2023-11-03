@@ -5,11 +5,13 @@ import executor.service.model.Scenario;
 public class ServiceFacade {
     private final ScenarioService scenarioService;
 
-    public ServiceFacade(ScenarioService scenarioService) {
+    public ServiceFacade(
+            final ScenarioService scenarioService) {
         this.scenarioService = scenarioService;
     }
 
-    public void executeScenario(Scenario scenario) {
+    public void executeScenario(
+            final Scenario scenario) {
         scenarioService.executeScenario(scenario);
     }
 }

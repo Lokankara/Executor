@@ -7,7 +7,7 @@ import executor.service.service.plugin.ProxySourcesClient;
 
 import static executor.service.service.plugin.FileSourcesReader.readFile;
 
-public class ProxySourcesClientImpl
+public class ProxySourcesClientService
         implements ProxySourcesClient {
 
     @Override
