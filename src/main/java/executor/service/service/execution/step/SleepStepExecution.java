@@ -15,7 +15,7 @@ public class SleepStepExecution
     }
 
     @Override
-    public String getStepAction() {
+    public String stepAction() {
         return this.stepAction;
     }
 

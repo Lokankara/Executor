@@ -1,6 +1,6 @@
 package executor.service.service.execution.step;
 
-public class Action {
+public final class Action {
     private Action() {
     }
 

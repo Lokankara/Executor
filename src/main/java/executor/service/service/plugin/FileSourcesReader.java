@@ -6,7 +6,7 @@ import executor.service.exception.FileReadException;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class FileSourcesReader {
+public final class FileSourcesReader {
 
     private FileSourcesReader() {
     }

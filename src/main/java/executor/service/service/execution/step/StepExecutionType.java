@@ -2,7 +2,9 @@ package executor.service.service.execution.step;
 
 import java.util.Arrays;
 
-import static executor.service.service.execution.step.Action.*;
+import static executor.service.service.execution.step.Action.CLICK_CSS_ACTION;
+import static executor.service.service.execution.step.Action.CLICK_XPATH_ACTION;
+import static executor.service.service.execution.step.Action.SLEEP_ACTION;
 
 public enum StepExecutionType {
     CLICK_XPATH(new ClickXpathStepExecution(CLICK_XPATH_ACTION)),

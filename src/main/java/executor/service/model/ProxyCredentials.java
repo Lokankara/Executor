@@ -1,12 +1,8 @@
 package executor.service.model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class ProxyCredentials
-        implements Serializable {
-
-    private static final long serialVersionUID = 321L;
+public class ProxyCredentials {
     private String username;
     private String password;
 
@@ -67,8 +63,8 @@ public class ProxyCredentials
 
     @Override
     public String toString() {
-        return String.format("{username='%s', password='%s'}",
-                username,
-                password);
+        return String.format(
+                "{username='%s', password='%s'}",
+                username, password);
     }
 }

@@ -1,12 +1,8 @@
 package executor.service.model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class ThreadPoolConfig
-        implements Serializable {
-
-    private static final long serialVersionUID = 1234567L;
+public class ThreadPoolConfig {
     private Integer corePoolSize;
     private Long keepAliveTime;
 
@@ -67,7 +63,8 @@ public class ThreadPoolConfig
 
     @Override
     public String toString() {
-        return String.format("{corePoolSize=%d, keepAliveTime=%d}",
+        return String.format(
+                "{corePoolSize=%d, keepAliveTime=%d}",
                 corePoolSize,
                 keepAliveTime);
     }

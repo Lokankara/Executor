@@ -1,12 +1,8 @@
 package executor.service.model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class Step
-        implements Serializable {
-
-    private static final long serialVersionUID = 54321L;
+public class Step {
     private String action;
     private String value;
 
@@ -67,6 +63,8 @@ public class Step
 
     @Override
     public String toString() {
-        return String.format("{action='%s', value='%s'}", action, value);
+        return String.format(
+                "{action='%s', value='%s'}",
+                action, value);
     }
 }
