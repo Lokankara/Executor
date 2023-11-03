@@ -4,7 +4,7 @@ import executor.service.model.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public record ClickXpathStepExecution(String stepAction)
+public record ClickXpathStepExecution(String getStepAction)
         implements StepExecution {
 
     @Override

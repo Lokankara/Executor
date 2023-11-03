@@ -19,6 +19,10 @@ public enum StepExecutionType {
         this.stepExecution = stepExecution;
     }
 
+    public StepExecution getStepExecution() {
+        return this.stepExecution;
+    }
+
     public static StepExecutionType fromString(
             final String action) {
         return Arrays
@@ -26,9 +30,5 @@ public enum StepExecutionType {
                 .filter(type -> type.name().equalsIgnoreCase(action))
                 .findFirst()
                 .orElse(UNSUPPORTED);
-    }
-
-    public StepExecution getStepExecution() {
-        return this.stepExecution;
     }
 }

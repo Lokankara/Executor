@@ -28,10 +28,10 @@ public class ParallelFlowExecutorService {
     }
 
     public void executeScenario(
-            final Executor executorInstance,
+            final ScenarioExecutor scenarioExecutorInstance,
             final Scenario scenario,
             final WebDriver webDriver) {
-        threadPoolExecutor.execute(() -> executorInstance
+        threadPoolExecutor.execute(() -> scenarioExecutorInstance
                 .execute(scenario, webDriver));
     }
 }

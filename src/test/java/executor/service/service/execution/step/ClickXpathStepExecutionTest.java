@@ -46,7 +46,7 @@ class ClickXpathStepExecutionTest {
         @Test
     @DisplayName("Given a ClickXpathStepExecution instance, when getStepAction method is called, then the correct step action is returned")
     void testGetStepAction() {
-        String result = clickStep.stepAction();
+        String result = clickStep.getStepAction();
         assertEquals("clickXpath", result);
     }
 }

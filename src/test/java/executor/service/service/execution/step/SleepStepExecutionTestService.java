@@ -53,7 +53,7 @@ class SleepStepExecutionTestService {
     @Test
     @DisplayName("Given a SleepStepExecution instance when getStepAction method is called then correct step action is returned")
     void testGetStepAction() {
-        String result = sleepStepExecution.stepAction();
+        String result = sleepStepExecution.getStepAction();
         assertEquals(stepAction, result);
     }
 }

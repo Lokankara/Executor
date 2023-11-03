@@ -4,25 +4,12 @@ import executor.service.exception.StepExecutionInterruptedException;
 import executor.service.model.Step;
 import org.openqa.selenium.WebDriver;
 
-public class SleepStepExecution
+public record SleepStepExecution(String getStepAction)
         implements StepExecution {
-
-    private final String stepAction;
-
-    public SleepStepExecution(
-            final String stepAction) {
-        this.stepAction = stepAction;
-    }
-
-    @Override
-    public String stepAction() {
-        return this.stepAction;
-    }
 
     @Override
     public void step(
-            final WebDriver webDriver,
-            final Step step) {
+            final WebDriver webDriver, final Step step) {
         long sleepTimeMillis = Long.parseLong(step.getValue());
         try {
             Thread.sleep(sleepTimeMillis);

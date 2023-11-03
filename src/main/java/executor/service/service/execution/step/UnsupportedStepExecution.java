@@ -5,8 +5,9 @@ import org.openqa.selenium.WebDriver;
 
 public class UnsupportedStepExecution
         implements StepExecution {
+
     @Override
-    public String stepAction() {
+    public String getStepAction() {
         return "unsupported";
     }
 

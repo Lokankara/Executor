@@ -1,6 +1,7 @@
 package executor.service.service.facade;
 
 import executor.service.service.execution.ExecutionService;
+import executor.service.service.execution.QueueExecutionService;
 import executor.service.service.execution.step.StepExecutionService;
 import executor.service.service.facade.impl.ScenarioServiceImpl;
 import executor.service.service.execution.step.StepExecutionServiceImpl;
@@ -14,7 +15,7 @@ public class ServiceFactory {
 
     public static ServiceFacade createServiceFacade() {
         WebDriverInitializerFactory factory = new WebDriverInitializerFactory();
-        ExecutionService executionService = new ExecutionService();
+        ExecutionService executionService = new QueueExecutionService();
         WebDriverService webDriverService = new WebDriverServiceImpl(factory);
         StepExecutionService stepExecutionService =
                 new StepExecutionServiceImpl();

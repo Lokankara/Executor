@@ -9,7 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static executor.service.service.plugin.FileSourcesReader.readFile;
 
-public class ScenarioSourceListenerImpl
+public class QueueScenarioSourceListener
         implements ScenarioSourceListener {
     private final Queue<Scenario> scenarioQueue = new LinkedBlockingQueue<>();
 

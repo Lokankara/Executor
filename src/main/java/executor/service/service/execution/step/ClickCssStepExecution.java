@@ -4,7 +4,7 @@ import executor.service.model.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public record ClickCssStepExecution(String stepAction)
+public record ClickCssStepExecution(String getStepAction)
         implements StepExecution {
 
     @Override
@@ -13,4 +13,5 @@ public record ClickCssStepExecution(String stepAction)
         By selector = By.cssSelector(step.getValue());
         webDriver.findElement(selector).click();
     }
+
 }
