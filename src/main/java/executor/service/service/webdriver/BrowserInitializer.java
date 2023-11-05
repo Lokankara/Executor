@@ -5,5 +5,7 @@ import executor.service.model.WebDriverConfig;
 import org.openqa.selenium.WebDriver;
 
 public interface BrowserInitializer {
-    WebDriver init(WebDriverConfig config, ProxyConfigHolder configHolder);
+    WebDriver init(
+            WebDriverConfig config,
+            ProxyConfigHolder configHolder);
 }

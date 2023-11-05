@@ -1,7 +1,7 @@
 package executor.service.service.step;
 
 import executor.service.model.Step;
-import executor.service.service.step.ClickCssStepExecution;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import static executor.service.service.step.Action.CLICK_CSS_ACTION;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -19,22 +20,26 @@ class ClickCssStepExecutionTest {
 
     @Mock
     private WebDriver mockWebDriver;
-
     @Mock
     private WebElement mockElement;
-
     @InjectMocks
     private ClickCssStepExecution clickStep;
 
-    String action = "clickCss";
-    String cssValue = ".submit-button";
-    Step step;
+    private final String cssValue = ".submit-button";
+    private Step step;
+
+    private AutoCloseable closeable;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.initMocks(this);
-        step = new Step(action, cssValue);
-        clickStep = new ClickCssStepExecution(action);
+        closeable = MockitoAnnotations.openMocks(this);
+        step = new Step(CLICK_CSS_ACTION, cssValue);
+        clickStep = new ClickCssStepExecution(CLICK_CSS_ACTION);
+    }
+
+    @AfterEach
+    public void cleanUp() throws Exception {
+        closeable.close();
     }
 
     @Test

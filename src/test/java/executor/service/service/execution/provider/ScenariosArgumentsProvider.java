@@ -7,12 +7,12 @@ import org.junit.jupiter.params.provider.ArgumentsProvider;
 
 import java.util.stream.Stream;
 
+import static executor.service.model.Constants.SCENARIO_FILENAME;
 import static executor.service.service.plugin.FileSourcesReader.readFile;
 import static java.util.Arrays.asList;
 
 public class ScenariosArgumentsProvider
         implements ArgumentsProvider {
-    private static final String SCENARIO_FILENAME = "json/Scenario.json";
 
     @Override
     public Stream<? extends Arguments> provideArguments(

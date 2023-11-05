@@ -6,8 +6,10 @@ import executor.service.service.execution.provider.ActionsArgumentsProvider;
 import executor.service.service.execution.provider.ScenariosArgumentsProvider;
 import executor.service.service.executor.ScenarioExecutor;
 import executor.service.service.executor.ScenarioExecutorService;
+import executor.service.service.step.UnsupportedStepExecution;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -19,6 +21,9 @@ import org.openqa.selenium.WebElement;
 import java.util.Arrays;
 import java.util.List;
 
+import static executor.service.service.step.Action.UNSUPPORTED_ACTION;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -41,7 +46,6 @@ class ScenarioExecutorServiceTest {
     @Mock
     private ScenarioExecutor service;
 
-
     @BeforeEach
     public void setup() {
         sleep = new Step();
@@ -58,7 +62,9 @@ class ScenarioExecutorServiceTest {
     @ParameterizedTest(name = "Step: action = {0}, value = {1}")
     @DisplayName("Given a ScenarioExecutor instance, when execute method is called, then the correct steps are executed")
     @CsvFileSource(resources = {"/csv/actions.csv"}, numLinesToSkip = 1)
-    void testScenarioExecutor(String action, String value) {
+    void testScenarioExecutor(
+            String action,
+            String value) {
         String site = "https://github.com";
         when(webDriver.findElement(any(By.class))).thenReturn(webElement);
         sleep.setValue("1:2");
@@ -76,8 +82,7 @@ class ScenarioExecutorServiceTest {
 
     @ParameterizedTest
     @ArgumentsSource(ScenariosArgumentsProvider.class)
-    @DisplayName("Given a List Scenarios instances, when execute "
-            + "method is called, then the correct steps are executed")
+    @DisplayName("Given a List Scenarios instances, when execute method is called, then the correct steps are executed")
     void testScenarios(List<Scenario> scenarios) {
         when(webDriver.findElement(any(By.class))).thenReturn(webElement);
         scenarios.forEach(scenario -> service.execute(scenario, webDriver));
@@ -89,8 +94,8 @@ class ScenarioExecutorServiceTest {
 
     @ParameterizedTest
     @ArgumentsSource(ActionsArgumentsProvider.class)
-    @DisplayName("Given a ClickCssStepExecution instance, when List of steps method is called, then the correct element is clicked")
-    void testClickingElementByCss(List<Step> steps) {
+    @DisplayName("Given a Scenario instance, when List of steps method is called, then the correct element is clicked")
+    void testStepsOfScenario(List<Step> steps) {
         String site = "https://github.com";
         when(webDriver.findElement(any(By.class))).thenReturn(webElement);
         Scenario scenario = new Scenario();
@@ -100,5 +105,20 @@ class ScenarioExecutorServiceTest {
         verify(webElement, times(steps.size())).click();
         verify(webDriver).get(site);
         verify(webDriver).quit();
+    }
+
+    @Test
+    @DisplayName("Given an unsupported action, when step method is called, then UnsupportedOperationException is thrown")
+    void testUnsupportedStepExecution() {
+        Step step = mock(Step.class);
+        when(step.getAction()).thenReturn(UNSUPPORTED_ACTION);
+        UnsupportedStepExecution execution = new UnsupportedStepExecution(
+                UNSUPPORTED_ACTION);
+        Exception exception = assertThrows(UnsupportedOperationException.class,
+                () -> execution.step(webDriver, step));
+        String message = String.format("The action %s is not supported.",
+                UNSUPPORTED_ACTION);
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(message));
     }
 }

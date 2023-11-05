@@ -7,21 +7,15 @@ import org.openqa.selenium.WebDriver;
 public class WebDriverServiceManager
         implements WebDriverService {
 
-    private final WebDriverInitializerFactory factory;
-
     private static WebDriver driver;
 
-    public WebDriverServiceManager(
-            final WebDriverInitializerFactory factory) {
-        this.factory = factory;
-    }
 
     @Override
     public WebDriver getWebDriver(
             final WebDriverConfig config) {
-        return WebDriverInitializerFactory.getInstance(config)
+        return WebDriverInitializerFactory
+                .getInstance(config)
                 .init(Browser.FIREFOX);
-        // return factory.getInstance(config).init(Browser.FIREFOX);
     }
 
     @Override

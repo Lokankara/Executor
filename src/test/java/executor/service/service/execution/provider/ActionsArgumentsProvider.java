@@ -11,7 +11,7 @@ import static executor.service.service.plugin.FileSourcesReader.readFile;
 import static java.util.Arrays.asList;
 
 public class ActionsArgumentsProvider implements ArgumentsProvider {
-    private static final String filename = "json/Actions.json";
+    private static final String filename = "json/ClickActions.json";
 
     @Override
     public Stream<? extends Arguments> provideArguments(

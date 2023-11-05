@@ -1,5 +1,6 @@
 package executor.service.service.plugin;
 
+import executor.service.exception.FileReadException;
 import executor.service.model.ProxyConfigHolder;
 import executor.service.model.ProxyCredentials;
 import executor.service.model.ProxyNetworkConfig;
@@ -9,10 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import static executor.service.model.Constants.PROXY_CONFIG_FILENAME;
+
 public class ProxySourcesClientService
         implements ProxySourcesClient {
-
-    private static final String proxyConfigPath = "proxy.properties";
     private ProxyConfigHolder cachedProxyConfig;
 
     @Override
@@ -21,13 +22,16 @@ public class ProxySourcesClientService
             return cachedProxyConfig;
         }
 
-        try (InputStream is = getClass().getResourceAsStream(proxyConfigPath)) {
-            if (is == null) {
-                throw new FileNotFoundException("File not found on classpath: " + proxyConfigPath);
+        try (InputStream inputStream = getClass()
+                .getResourceAsStream(PROXY_CONFIG_FILENAME)) {
+            if (inputStream == null) {
+                throw new FileNotFoundException(
+                        String.format("File not found on classpath: %s%n",
+                                PROXY_CONFIG_FILENAME));
             }
 
             Properties prop = new Properties();
-            prop.load(is);
+            prop.load(inputStream);
 
             Integer port = Integer.valueOf(prop.getProperty("port"));
             String hostname = prop.getProperty("hostname");
@@ -39,8 +43,7 @@ public class ProxySourcesClientService
                     new ProxyCredentials(username, password));
             return cachedProxyConfig;
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new FileReadException(e.getMessage());
         }
     }
 }

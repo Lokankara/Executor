@@ -2,22 +2,20 @@ package executor.service.service.webdriver;
 
 import executor.service.model.ProxyConfigHolder;
 import executor.service.model.WebDriverConfig;
-import executor.service.service.factory.WebDriverFactory;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static executor.service.model.Constants.PROXY_CONFIG_FILENAME;
+import static executor.service.model.Constants.WEBDRIVER_FILENAME;
 
 public class WebDriverInitializerFactory
         implements WebDriverInitializer {
-
-    private static final String PROXY_FILE = "proxy.properties";
-    private static final String WEBDRIVER_FILE = "web-driver.properties";
-
-    private WebDriverConfig config;
     private ProxyConfigHolder holder;
     private ConfigurationLoader loader;
-    private static final ConcurrentHashMap<WebDriverConfig, WebDriverInitializerFactory>
-            INSTANCES = new ConcurrentHashMap<>();
+    private WebDriverConfig webDriverConfig;
+    private static final Map<WebDriverConfig, WebDriverInitializerFactory> INSTANCES = new ConcurrentHashMap<>();
 
     private static class Holder {
         private static final WebDriverInitializerFactory INSTANCE =
@@ -25,28 +23,28 @@ public class WebDriverInitializerFactory
     }
 
     public WebDriverInitializerFactory() {
-        this.config = new WebDriverConfig();
+        this.webDriverConfig = new WebDriverConfig();
         this.holder = new ProxyConfigHolder();
         this.loader = new ConfigurationLoader();
     }
 
     public WebDriverInitializerFactory(
-            final WebDriverConfig config,
+            final WebDriverConfig webDriverConfig,
             final ProxyConfigHolder holder) {
-        this.config = config;
+        this.webDriverConfig = webDriverConfig;
         this.holder = holder;
         this.loader = new ConfigurationLoader();
     }
 
     private WebDriverInitializerFactory(
-            final WebDriverConfig config) {
-        this.config = config;
+            final WebDriverConfig webDriverConfig) {
+        this.webDriverConfig = webDriverConfig;
     }
 
     public static WebDriverInitializerFactory getInstance(
             final WebDriverConfig config) {
-        return INSTANCES.computeIfAbsent(
-                config, WebDriverInitializerFactory::new);
+        return INSTANCES.computeIfAbsent(config,
+                WebDriverInitializerFactory::new);
     }
 
     public static WebDriverInitializerFactory getInstance() {
@@ -54,25 +52,20 @@ public class WebDriverInitializerFactory
     }
 
     public WebDriver init(Browser browser) {
-        WebDriverFactory webDriverFactory = new WebDriverFactory();
-        return switch (browser) {
-            case CHROME -> webDriverFactory.initChromeDriver();
-            case FIREFOX -> webDriverFactory.initFirefoxDriver();
-            default -> throw new IllegalArgumentException(
-                    "Unsupported browser: " + browser);
-        };
+        return getWebDriver(browser, webDriverConfig, holder);
     }
 
     @Override
     public WebDriverInitializer create() {
-        config = loader.loadWebDriverConfig(WEBDRIVER_FILE);
-        holder = loader.loadProxyConfig(PROXY_FILE);
-        return new WebDriverInitializerFactory(config, holder);
+        webDriverConfig = loader.loadWebDriverConfig(WEBDRIVER_FILENAME);
+        holder = loader.loadProxyConfig(PROXY_CONFIG_FILENAME);
+        return new WebDriverInitializerFactory(webDriverConfig, holder);
     }
 
     public static WebDriver getWebDriver(
-            final Browser browser, final WebDriverConfig config,
-            final ProxyConfigHolder configHolder) {
-        return browser.init(config, configHolder);
+            Browser browser,
+            WebDriverConfig config,
+            final ProxyConfigHolder holder) {
+        return browser.init(config, holder);
     }
 }

@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openqa.selenium.WebDriver;
 
+import static executor.service.model.Constants.PROXY_CONFIG_FILENAME;
+import static executor.service.model.Constants.WEBDRIVER_FILENAME;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -28,8 +30,8 @@ class WebDriverInitializerFactoryTest {
 
 //    @Test
 //    void testCreate() {
-//        when(configurationLoader.loadWebDriverConfig("web-driver.properties")).thenReturn(webDriverConfig);
-//        when(configurationLoader.loadProxyConfig("proxy.properties")).thenReturn(proxyConfigHolder);
+//        when(configurationLoader.loadWebDriverConfig(WEBDRIVER_FILENAME)).thenReturn(webDriverConfig);
+//        when(configurationLoader.loadProxyConfig(PROXY_CONFIG_FILENAME)).thenReturn(proxyConfigHolder);
 //        when(webDriverInitializerFactory.create()).thenReturn(webDriverInitializerFactory);
 //        WebDriverInitializer initializer = webDriverInitializerFactory.create();
 //        assertNotNull(initializer, "WebDriverInitializer should not be null after creation");
