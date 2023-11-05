@@ -1,5 +1,6 @@
 package executor.service.service.execution;
 
+import executor.service.service.executor.ScenarioExecutor;
 import executor.service.service.plugin.ScenarioSourceListener;
 import org.openqa.selenium.WebDriver;
 

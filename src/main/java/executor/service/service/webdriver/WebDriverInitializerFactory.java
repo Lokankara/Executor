@@ -2,6 +2,7 @@ package executor.service.service.webdriver;
 
 import executor.service.model.ProxyConfigHolder;
 import executor.service.model.WebDriverConfig;
+import executor.service.service.factory.WebDriverFactory;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.ConcurrentHashMap;

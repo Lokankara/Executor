@@ -28,7 +28,7 @@ class ProxyNetworkConfigTest {
                 new ProxyNetworkConfig("example.com", 8080);
         ProxyNetworkConfig actual = objectMapper.readValue(getClass()
                 .getClassLoader()
-                .getResource("config.json"), ProxyNetworkConfig.class);
+                .getResource("json/config.json"), ProxyNetworkConfig.class);
         assertEquals(expected, actual);
     }
 

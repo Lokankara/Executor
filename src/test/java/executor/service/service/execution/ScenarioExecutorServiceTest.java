@@ -2,72 +2,103 @@ package executor.service.service.execution;
 
 import executor.service.model.Scenario;
 import executor.service.model.Step;
-import executor.service.service.execution.step.StepExecution;
+import executor.service.service.execution.provider.ActionsArgumentsProvider;
+import executor.service.service.execution.provider.ScenariosArgumentsProvider;
+import executor.service.service.executor.ScenarioExecutor;
+import executor.service.service.executor.ScenarioExecutorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.mockito.Mock;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static executor.service.service.execution.step.Action.CLICK_CSS_ACTION;
-import static executor.service.service.execution.step.Action.CLICK_XPATH_ACTION;
-import static executor.service.service.execution.step.Action.SLEEP_ACTION;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class ScenarioExecutorServiceTest {
-
-    @InjectMocks
-    private ScenarioExecutorService executor;
+    @Mock
     private WebDriver webDriver;
-    private Step a;
-    private Step b;
-    private Step c;
+    @Mock
+    private Step click;
+    @Mock
+    private Step sleep;
+    @Mock
+    private Step clickCss;
+    @Mock
     private Scenario scenario;
-    private StepExecution stepA;
-    private StepExecution stepB;
-    private StepExecution stepC;
+    @Mock
+    private WebElement webElement;
+    @Mock
+    private ScenarioExecutor service;
+
 
     @BeforeEach
     public void setup() {
-        a = mock(Step.class);
-        b = mock(Step.class);
-        c = mock(Step.class);
+        sleep = new Step();
+        click = new Step();
+        clickCss = mock(Step.class);
         scenario = mock(Scenario.class);
         webDriver = mock(WebDriver.class);
-        stepA = mock(StepExecution.class);
-        stepB = mock(StepExecution.class);
-        stepC = mock(StepExecution.class);
-        executor = spy(ScenarioExecutorService.class);
-        List<Step> steps = Arrays.asList(a, b, c);
+        webElement = mock(WebElement.class);
+        List<Step> steps = Arrays.asList(click, sleep, clickCss);
         when(scenario.getSteps()).thenReturn(steps);
+        service = new ScenarioExecutorService();
     }
 
-    @Test
+    @ParameterizedTest(name = "Step: action = {0}, value = {1}")
     @DisplayName("Given a ScenarioExecutor instance, when execute method is called, then the correct steps are executed")
-    void testExecuteScenario() {
+    @CsvFileSource(resources = {"/csv/actions.csv"}, numLinesToSkip = 1)
+    void testScenarioExecutor(String action, String value) {
+        String site = "https://github.com";
+        when(webDriver.findElement(any(By.class))).thenReturn(webElement);
+        sleep.setValue("1:2");
+        sleep.setAction("SLEEP");
+        click.setAction(action);
+        click.setValue(value);
+        List<Step> steps = Arrays.asList(click, sleep);
+        Scenario scenario = new Scenario();
+        scenario.setSite(site);
+        scenario.setSteps(steps);
+        service.execute(scenario, webDriver);
+        verify(webDriver).get(site);
+        verify(webDriver).quit();
+    }
 
-//        doReturn(stepA).when(executor).getStepExecution(CLICK_XPATH_ACTION);
-//        doReturn(stepB).when(executor).getStepExecution(CLICK_CSS_ACTION);
-//        doReturn(stepC).when(executor).getStepExecution(SLEEP_ACTION);
-//        when(a.getAction()).thenReturn(CLICK_XPATH_ACTION);
-//        when(b.getAction()).thenReturn(CLICK_CSS_ACTION);
-//        when(c.getAction()).thenReturn(SLEEP_ACTION);
-//
-//        executor.execute(scenario, webDriver);
-//
-//        verify(a, times(1)).getAction();
-//        verify(b, times(1)).getAction();
-//        verify(c, times(1)).getAction();
-//        verify(stepA, times(1)).step(webDriver, a);
-//        verify(stepB, times(1)).step(webDriver, b);
-//        verify(stepC, times(1)).step(webDriver, c);
+    @ParameterizedTest
+    @ArgumentsSource(ScenariosArgumentsProvider.class)
+    @DisplayName("Given a List Scenarios instances, when execute "
+            + "method is called, then the correct steps are executed")
+    void testScenarios(List<Scenario> scenarios) {
+        when(webDriver.findElement(any(By.class))).thenReturn(webElement);
+        scenarios.forEach(scenario -> service.execute(scenario, webDriver));
+        scenarios.forEach(scenario -> {
+            verify(webDriver, times(scenarios.size())).get(scenario.getSite());
+            verify(webDriver, times(scenarios.size())).quit();
+        });
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(ActionsArgumentsProvider.class)
+    @DisplayName("Given a ClickCssStepExecution instance, when List of steps method is called, then the correct element is clicked")
+    void testClickingElementByCss(List<Step> steps) {
+        String site = "https://github.com";
+        when(webDriver.findElement(any(By.class))).thenReturn(webElement);
+        Scenario scenario = new Scenario();
+        scenario.setSite(site);
+        scenario.setSteps(steps);
+        service.execute(scenario, webDriver);
+        verify(webElement, times(steps.size())).click();
+        verify(webDriver).get(site);
+        verify(webDriver).quit();
     }
 }

@@ -74,7 +74,7 @@ class WebDriverConfigTest {
             throws IOException {
         WebDriverConfig expected = objectMapper.readValue(getClass()
                 .getClassLoader()
-                .getResource("WebDriverConfig.json"), WebDriverConfig.class);
+                .getResource("json/WebDriverConfig.json"), WebDriverConfig.class);
         String expectedString = expected.toString();
         String actual = config1.toString();
         assertEquals(actual, expectedString);

@@ -11,14 +11,17 @@ public final class FileSourcesReader {
     private FileSourcesReader() {
     }
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static class Holder {
+        private static final ObjectMapper objectMapper = new ObjectMapper();
+    }
 
-    public static <T> T readFile(String filename, Class<T> valueType) {
-        try (InputStream inputStream = ProxySourcesClient.class
-                .getClassLoader()
-                .getResourceAsStream(filename)) {
+    public static <T> T readFile(
+            final String filename,
+            final Class<T> valueType) {
+        try (InputStream inputStream = ClassLoader
+                .getSystemResourceAsStream(filename)) {
             if (inputStream != null) {
-                return objectMapper.readValue(inputStream, valueType);
+                return Holder.objectMapper.readValue(inputStream, valueType);
             }
         } catch (IOException e) {
             throw new FileReadException(e.getMessage(), e);

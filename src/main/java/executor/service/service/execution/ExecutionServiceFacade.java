@@ -7,19 +7,17 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.Queue;
 
-public class QueueExecutionService
+public class ExecutionServiceFacade
         implements ExecutionService {
 
     @Override
     public void execute(
-            WebDriver webDriver,
-            ScenarioSourceListener listener,
-            ScenarioExecutor scenarioExecutor) {
-        listener.execute();
+            final WebDriver webDriver,
+            final ScenarioSourceListener listener,
+            final ScenarioExecutor scenarioExecutor) {
         Queue<Scenario> scenarios = listener.getScenarioQueue();
         while (!scenarios.isEmpty()) {
-            Scenario scenario = scenarios.poll();
-            scenarioExecutor.execute(scenario, webDriver);
+            scenarioExecutor.execute(scenarios.poll(), webDriver);
         }
     }
 }

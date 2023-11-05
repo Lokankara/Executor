@@ -1,7 +1,5 @@
 package executor.service.model;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Objects;
 
 public class ProxyConfigHolder {
