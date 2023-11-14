@@ -3,17 +3,11 @@ package executor.service.service.webdriver;
 import executor.service.model.ProxyConfigHolder;
 import executor.service.model.WebDriverConfig;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.openqa.selenium.WebDriver;
 
-import static executor.service.model.Constants.PROXY_CONFIG_FILENAME;
-import static executor.service.model.Constants.WEBDRIVER_FILENAME;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-
-class WebDriverInitializerFactoryTest {
-    private WebDriverInitializerFactory webDriverInitializerFactory;
+class WebDriverInitializerTest {
+    private WebDriverInitializer webDriverInitializer;
     private WebDriverConfig webDriverConfig;
     private ProxyConfigHolder proxyConfigHolder;
     private WebDriver webDriver;
@@ -25,7 +19,7 @@ class WebDriverInitializerFactoryTest {
         proxyConfigHolder = Mockito.mock(ProxyConfigHolder.class);
         configurationLoader = Mockito.mock(ConfigurationLoader.class);
         webDriver = Mockito.mock(WebDriver.class);
-        webDriverInitializerFactory = new WebDriverInitializerFactory(webDriverConfig, proxyConfigHolder);
+        webDriverInitializer = new WebDriverInitializer(webDriverConfig, proxyConfigHolder);
     }
 
 //    @Test

@@ -1,4 +1,6 @@
-## REST API:
+[![Java CI with Maven](https://github.com/Lokankara/Executor/actions/workflows/maven.yml/badge.svg)](https://github.com/Lokankara/Executor/actions/workflows/maven.yml)
+
+## QA:
 
 ### Executor service
 

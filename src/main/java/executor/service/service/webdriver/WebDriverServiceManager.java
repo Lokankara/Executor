@@ -9,11 +9,10 @@ public class WebDriverServiceManager
 
     private static WebDriver driver;
 
-
     @Override
     public WebDriver getWebDriver(
             final WebDriverConfig config) {
-        return WebDriverInitializerFactory
+        return WebDriverInitializer
                 .getInstance(config)
                 .init(Browser.FIREFOX);
     }
@@ -23,8 +22,6 @@ public class WebDriverServiceManager
             final WebDriver webDriver) {
         webDriver.quit();
     }
-
-
 
     public static WebDriver getDriver(
             final Browser browser,

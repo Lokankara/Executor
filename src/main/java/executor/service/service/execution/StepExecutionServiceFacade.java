@@ -4,7 +4,7 @@ import executor.service.model.Step;
 import executor.service.service.step.StepExecutionType;
 import org.openqa.selenium.WebDriver;
 
-public class StepExecutionServiceImpl
+public class StepExecutionServiceFacade
         implements StepExecutionService {
 
     @Override

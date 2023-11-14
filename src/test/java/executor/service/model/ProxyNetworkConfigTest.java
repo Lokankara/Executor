@@ -84,8 +84,21 @@ class ProxyNetworkConfigTest {
     @Test
     @DisplayName("Given ProxyNetworkConfig instance, when toString is called, then it should return the expected string representation")
     void testToString() {
-        String expectedString =
-                "{hostname='hostname1', port=8080}";
+        String expectedString = "{hostname='hostname1', port=8080}";
         assertEquals(expectedString, config1.toString());
     }
+
+    @Test
+    @DisplayName("Given two ProxyNetworkConfig objects when they have the same hostname and port then they should be equal and have the same hashcode")
+    void testEqualsAndHashCode() {
+        ProxyNetworkConfig config1 = new ProxyNetworkConfig();
+        config1.setHostname("localhost");
+        config1.setPort(8080);
+        ProxyNetworkConfig config2 = new ProxyNetworkConfig();
+        config2.setHostname("localhost");
+        config2.setPort(8080);
+        assertEquals(config1, config2);
+        assertEquals(config1.hashCode(), config2.hashCode());
+    }
+
 }

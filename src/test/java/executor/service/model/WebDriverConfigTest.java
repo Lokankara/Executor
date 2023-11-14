@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static executor.service.model.Constants.WEBDRIVER_CONFIG_FILENAME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class WebDriverConfigTest {
 
@@ -40,28 +40,31 @@ class WebDriverConfigTest {
 
     @Test
     @DisplayName("Given equal WebDriverConfig instances, when testing equality, then they should be considered equal")
-    void testEquals_EqualConfigs() {
-        WebDriverConfig config1 = new WebDriverConfig("path",
+    void testEqualsEqualConfigs() {
+        WebDriverConfig config1 = new WebDriverConfig(
+                "path",
                 "userAgent",
                 10L,
                 20L);
-        WebDriverConfig config1Clone = new WebDriverConfig("path",
+        WebDriverConfig config1Clone = new WebDriverConfig(
+                "path",
                 "userAgent",
                 10L,
                 20L);
-        assertTrue(config1.equals(config1Clone));
+        assertEquals(config1, config1Clone);
     }
 
     @Test
     @DisplayName("Given different WebDriverConfig instances, when testing equality, then they should not be considered equal")
-    void testEquals_DifferentConfigs() {
-        assertFalse(config1.equals(config2));
+    void testEqualsDifferentConfigs() {
+        assertNotEquals(config1, config2);
     }
 
     @Test
     @DisplayName("Given equal WebDriverConfig instances, when calculating the hash code, then it should be the same")
     void testHashCode() {
-        WebDriverConfig config1Clone = new WebDriverConfig("path",
+        WebDriverConfig config1Clone = new WebDriverConfig(
+                "path",
                 "userAgent",
                 10L,
                 20L);
@@ -70,11 +73,10 @@ class WebDriverConfigTest {
 
     @Test
     @DisplayName("Given a WebDriverConfig instance, when calling toString, then it should return the expected JSON string")
-    void testToString()
-            throws IOException {
+    void testToString() throws IOException {
         WebDriverConfig expected = objectMapper.readValue(getClass()
                 .getClassLoader()
-                .getResource("json/WebDriverConfig.json"), WebDriverConfig.class);
+                .getResource(WEBDRIVER_CONFIG_FILENAME), WebDriverConfig.class);
         String expectedString = expected.toString();
         String actual = config1.toString();
         assertEquals(actual, expectedString);

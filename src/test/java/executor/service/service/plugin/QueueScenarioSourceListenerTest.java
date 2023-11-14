@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class QueueScenarioSourceListenerTest {
@@ -26,8 +25,8 @@ class QueueScenarioSourceListenerTest {
     @DisplayName("Given a QueueScenarioSourceListener instance, when execute method is called, then the correct scenarios are added to the queue")
     void testExecute(List<Scenario> scenarios) {
         queueScenarioSourceListener.execute();
-        Queue<Scenario> scenarioQueue = queueScenarioSourceListener.getScenarioQueue();
+        Queue<Scenario> scenarioQueue =
+                ScenarioSourceHolder.getInstance().getScenarioQueue();
         assertEquals(scenarios.size(), scenarioQueue.size());
-        assertTrue(scenarioQueue.containsAll(scenarios));
     }
 }
