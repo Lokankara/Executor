@@ -4,9 +4,9 @@ import executor.service.service.executor.ScenarioExecutor;
 import executor.service.service.plugin.ScenarioSourceListener;
 import org.openqa.selenium.WebDriver;
 
-public interface ExecutionService {
+public interface ExecutionService<T> {
     void execute(
             WebDriver webDriver,
-            ScenarioSourceListener scenarioSourceListener,
+            ScenarioSourceListener<T> scenarioSourceListener,
             ScenarioExecutor scenarioExecutor);
 }

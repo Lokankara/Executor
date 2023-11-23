@@ -12,10 +12,10 @@ public class WebDriverConfig {
     }
 
     public WebDriverConfig(
-            final String webDriverExecutable,
-            final String userAgent,
-            final Long pageLoadTimeout,
-            final Long implicitlyWait) {
+            String webDriverExecutable,
+            String userAgent,
+            Long pageLoadTimeout,
+            Long implicitlyWait) {
         this.webDriverExecutable = webDriverExecutable;
         this.userAgent = userAgent;
         this.pageLoadTimeout = pageLoadTimeout;
@@ -67,11 +67,13 @@ public class WebDriverConfig {
             return false;
         }
         WebDriverConfig that = (WebDriverConfig) obj;
-        return Objects.equals(
-                webDriverExecutable, that.webDriverExecutable)
-                && Objects.equals(userAgent, that.userAgent)
-                && Objects.equals(pageLoadTimeout, that.pageLoadTimeout)
-                && Objects.equals(implicitlyWait, that.implicitlyWait);
+        return Objects.equals(webDriverExecutable,
+                              that.webDriverExecutable) && Objects.equals(
+                userAgent,
+                that.userAgent) && Objects.equals(pageLoadTimeout,
+                                                  that.pageLoadTimeout) && Objects.equals(
+                implicitlyWait,
+                that.implicitlyWait);
     }
 
     @Override

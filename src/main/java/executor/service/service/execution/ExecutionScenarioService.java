@@ -5,7 +5,6 @@ import executor.service.model.Step;
 import executor.service.service.factory.ScenarioService;
 import executor.service.service.webdriver.WebDriverService;
 import executor.service.service.webdriver.Browser;
-import executor.service.service.webdriver.WebDriverInitializer;
 import org.openqa.selenium.WebDriver;
 
 public class ExecutionScenarioService
@@ -23,13 +22,13 @@ public class ExecutionScenarioService
     @Override
     public void executeScenario(
             final Scenario scenario) {
+//        WebDriver webDriver = webDriverService.getWebDriver();
+        //        WebDriver webDriver = WebDriverInitializer
+//                .getInstance().init(Browser.FIREFOX);
 
-        WebDriver webDriver = WebDriverInitializer
-                .getInstance().init(Browser.FIREFOX);
-
-        for (Step step : scenario.getSteps()) {
-            stepExecutionService.executeStep(webDriver, step);
-        }
-        webDriverService.quitWebDriver(webDriver);
+//        for (Step step : scenario.getSteps()) {
+//            stepExecutionService.executeStep(webDriver, step);
+//        }
+//        webDriverService.quitWebDriver();
     }
 }

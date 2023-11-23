@@ -1,8 +1,6 @@
+## Executor service
+
 [![Java CI with Maven](https://github.com/Lokankara/Executor/actions/workflows/maven.yml/badge.svg)](https://github.com/Lokankara/Executor/actions/workflows/maven.yml)
-
-## QA:
-
-### Executor service
 
 #### Commands:
 
@@ -46,3 +44,19 @@ creating the project's artifacts, and verifying their correctness.
 Report with Jacoco Tool with Coverage
 
 `mvn clean test jacoco:report`
+
+worker has 2 objects scenario + proxy - listener
+if have 2: init driver, chrome + with config proxy (IP, username password)
+chrome execute scenario
+worker run async stream
+work diff queue for multi must be multi-thread queue
+
+controller service run worker if scenario + proxy
+2 queues  
+loop infinite read file scenario,
+loop infinite read file proxy,
+worker read 2 queues
+if proxy empty waiting
+worker run if 2 was 
+
+handle if empty queues

@@ -2,6 +2,8 @@ package executor.service.service.plugin;
 
 import executor.service.model.ProxyConfigHolder;
 import executor.service.service.execution.provider.ProxyConfigHolderArgumentsProvider;
+import executor.service.service.proxy.ProxySourcesClient;
+import executor.service.service.proxy.ProxySourcesClientService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

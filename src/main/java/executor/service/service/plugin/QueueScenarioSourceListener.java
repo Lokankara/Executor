@@ -1,19 +1,27 @@
 package executor.service.service.plugin;
 
+
 import executor.service.model.Scenario;
 
+import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static executor.service.model.Constants.SCENARIO_FILENAME;
-import static executor.service.service.plugin.FileSourcesReader.readFile;
-import static java.util.Arrays.asList;
 
 public class QueueScenarioSourceListener
-        implements ScenarioSourceListener {
+        implements ScenarioSourceListener<Scenario> {
+
+    private final Queue<Scenario> scenarioQueue;
+
+    public QueueScenarioSourceListener() {
+        scenarioQueue = new FileSourcesReader()
+                        .getAllFromFile(SCENARIO_FILENAME, Scenario.class);
+    }
 
     @Override
-    public void execute() {
-        ScenarioSourceHolder.getInstance(new LinkedBlockingQueue<>(
-                asList(readFile(SCENARIO_FILENAME, Scenario[].class))));
+    public Queue<Scenario> execute(
+            String filename,
+            Class<Scenario> type) {
+        return new LinkedBlockingQueue<>(scenarioQueue);
     }
 }

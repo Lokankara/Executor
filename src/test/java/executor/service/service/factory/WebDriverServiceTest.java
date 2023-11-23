@@ -16,7 +16,6 @@ import org.openqa.selenium.WebDriver;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -69,7 +68,7 @@ class WebDriverServiceTest {
     @Test
     @DisplayName("Given a WebDriverServiceImpl instance and a WebDriver, when quitWebDriver is called, then the quit method of the WebDriver is called")
     void testQuitWebDriver() {
-        service = new WebDriverServiceManager();
+        service = new WebDriverServiceManager(webDriver);
         service.quitWebDriver(webDriver);
         verify(webDriver, times(1)).quit();
     }

@@ -1,26 +1,33 @@
 package executor.service.service.execution;
 
-import executor.service.model.Scenario;
+import executor.service.service.executor.ParallelFlowExecutorService;
 import executor.service.service.executor.ScenarioExecutor;
-import executor.service.service.plugin.ScenarioSourceHolder;
-import executor.service.service.plugin.ScenarioSourceListener;
-import org.openqa.selenium.WebDriver;
+import executor.service.service.executor.ScenarioExecutorService;
 
-import java.util.Queue;
+public class ExecutionServiceFacade {
+//    ScenarioSourceListener listener = new QueueScenarioSourceListener();
+//    private final WebDriverService webDriverService =
+//            new WebDriverServiceManager();
+    private final StepExecutionService stepExecutionService =
+            new StepActionExecutionService();
+//    private final ExecutionScenarioService scenarioService =
+//            new ExecutionScenarioService(webDriverService,
+//                    stepExecutionService);
 
-public class ExecutionServiceFacade
-        implements ExecutionService {
+    ScenarioExecutor executorService = new ScenarioExecutorService();
 
-    @Override
-    public void execute(
-            final WebDriver webDriver,
-            final ScenarioSourceListener listener,
-            final ScenarioExecutor scenarioExecutor) {
-        listener.execute();
-        Queue<Scenario> scenarios =
-                ScenarioSourceHolder.getInstance().getScenarioQueue();
-        while (!scenarios.isEmpty()) {
-            scenarioExecutor.execute(scenarios.poll(), webDriver);
-        }
-    }
+    ParallelFlowExecutorService flowExecutorService =
+            new ParallelFlowExecutorService();
+
+//    public ExecutionServiceFacade() {
+//        listener.execute();
+//        Queue<Scenario> scenarios =
+//                ScenarioSourceHolder.getInstance().getScenarioQueue();
+//
+//
+//
+//        flowExecutorService.executeScenario();
+//        scenarioService.executeScenario();
+//    }
+
 }

@@ -3,7 +3,7 @@ name: Build and Test Report
 on:
   push:
     branches:
-      - test-service
+      - master
 
 jobs:
   build:

@@ -1,6 +1,8 @@
 package executor.service.service.plugin;
 
-public interface ScenarioSourceListener {
+import java.util.Queue;
 
-    void execute();
+public interface ScenarioSourceListener<T> {
+
+    Queue<T> execute(String filename, Class<T> types);
 }

@@ -30,7 +30,7 @@ class WebDriverServiceManagerTest {
     @BeforeEach
     public void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        manager = new WebDriverServiceManager();
+        manager = new WebDriverServiceManager(driver);
     }
 
     @AfterEach

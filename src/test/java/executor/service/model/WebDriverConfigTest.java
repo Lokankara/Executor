@@ -41,16 +41,10 @@ class WebDriverConfigTest {
     @Test
     @DisplayName("Given equal WebDriverConfig instances, when testing equality, then they should be considered equal")
     void testEqualsEqualConfigs() {
-        WebDriverConfig config1 = new WebDriverConfig(
-                "path",
-                "userAgent",
-                10L,
-                20L);
-        WebDriverConfig config1Clone = new WebDriverConfig(
-                "path",
-                "userAgent",
-                10L,
-                20L);
+        WebDriverConfig config1 =
+                new WebDriverConfig("path", "userAgent", 10L, 20L);
+        WebDriverConfig config1Clone =
+                new WebDriverConfig("path", "userAgent", 10L, 20L);
         assertEquals(config1, config1Clone);
     }
 
@@ -63,20 +57,20 @@ class WebDriverConfigTest {
     @Test
     @DisplayName("Given equal WebDriverConfig instances, when calculating the hash code, then it should be the same")
     void testHashCode() {
-        WebDriverConfig config1Clone = new WebDriverConfig(
-                "path",
-                "userAgent",
-                10L,
-                20L);
+        WebDriverConfig config1Clone =
+                new WebDriverConfig("path", "userAgent", 10L, 20L);
         assertEquals(config1.hashCode(), config1Clone.hashCode());
     }
 
     @Test
     @DisplayName("Given a WebDriverConfig instance, when calling toString, then it should return the expected JSON string")
-    void testToString() throws IOException {
-        WebDriverConfig expected = objectMapper.readValue(getClass()
-                .getClassLoader()
-                .getResource(WEBDRIVER_CONFIG_FILENAME), WebDriverConfig.class);
+    void testToString()
+            throws IOException {
+        WebDriverConfig expected =
+                objectMapper.readValue(getClass().getClassLoader()
+                                                 .getResource(
+                                                         WEBDRIVER_CONFIG_FILENAME),
+                                       WebDriverConfig.class);
         String expectedString = expected.toString();
         String actual = config1.toString();
         assertEquals(actual, expectedString);

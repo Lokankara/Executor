@@ -7,7 +7,11 @@ import org.openqa.selenium.WebDriver;
 public class WebDriverServiceManager
         implements WebDriverService {
 
-    private static WebDriver driver;
+    private final WebDriver driver;
+
+    public WebDriverServiceManager(WebDriver driver) {
+        this.driver = driver;
+    }
 
     @Override
     public WebDriver getWebDriver(
@@ -23,20 +27,20 @@ public class WebDriverServiceManager
         webDriver.quit();
     }
 
-    public static WebDriver getDriver(
-            final Browser browser,
-            final WebDriverConfig config,
-            final ProxyConfigHolder configHolder) {
-        if (driver == null) {
-            driver = browser.init(config, configHolder);
-        }
-        return driver;
-    }
-
-    public static void quitDriver() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
-        }
-    }
+//    public WebDriver getDriver(
+//            final Browser browser,
+//            final WebDriverConfig config,
+//            final ProxyConfigHolder configHolder) {
+//        if (driver == null) {
+//            driver = browser.init(config, configHolder);
+//        }
+//        return driver;
+//    }
+//
+//    public void quitDriver() {
+//        if (driver != null) {
+//            driver.quit();
+//            driver = null;
+//        }
+//    }
 }
