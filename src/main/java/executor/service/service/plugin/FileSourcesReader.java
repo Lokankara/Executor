@@ -17,7 +17,7 @@ public final class FileSourcesReader {
         this.objectMapper = new ObjectMapper();
     }
 
-    public <T> Queue<T> getAllFromFile(
+    public <T> Queue<T> readAllFromFile(
             String filename,
             Class<T> type) {
         try {

@@ -18,7 +18,7 @@ public class ProxyNetworkConfigArgumentsProvider
     public Stream<? extends Arguments> provideArguments(
             ExtensionContext extensionContext) {
 
-        return Stream.of(Arguments.of(new FileSourcesReader().getAllFromFile(
+        return Stream.of(Arguments.of(new FileSourcesReader().readAllFromFile(
                 NETWORK_FILENAME,
                 ProxyNetworkConfig.class)));
     }

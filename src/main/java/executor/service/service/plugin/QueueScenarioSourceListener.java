@@ -15,7 +15,7 @@ public class QueueScenarioSourceListener
 
     public QueueScenarioSourceListener() {
         scenarioQueue = new FileSourcesReader()
-                        .getAllFromFile(SCENARIO_FILENAME, Scenario.class);
+                        .readAllFromFile(SCENARIO_FILENAME, Scenario.class);
     }
 
     @Override

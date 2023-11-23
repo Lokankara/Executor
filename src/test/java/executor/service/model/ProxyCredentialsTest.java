@@ -76,6 +76,7 @@ class ProxyCredentialsTest {
         expected.add(new ProxyNetworkConfig("host1", 8080));
         expected.add(new ProxyNetworkConfig("host2", 8088));
         expected.add(new ProxyNetworkConfig("host3", 8089));
+        expected.add(new ProxyNetworkConfig("host4", 8090));
         List<ProxyNetworkConfig> actualConfigs = objectMapper.readValue(
                 getClass().getClassLoader().getResource(
                         "json/ProxyNetwork.json"),

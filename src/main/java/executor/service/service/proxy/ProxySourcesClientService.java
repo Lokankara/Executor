@@ -23,16 +23,18 @@ public class ProxySourcesClientService
     }
 
     private void init() {
-        ProxyCredentials[] credentials = readFile.readFile(
-                CREDENTIALS_FILENAME, ProxyCredentials[].class);
-        ProxyNetworkConfig[] configs = readFile.readFile(
-                NETWORK_FILENAME, ProxyNetworkConfig[].class);
-        if (credentials.length != configs.length) {
+        Queue<ProxyCredentials> credentials = readFile.readAllFromFile(
+                CREDENTIALS_FILENAME,
+                ProxyCredentials.class);
+        Queue<ProxyNetworkConfig> configs = readFile.readAllFromFile(
+                NETWORK_FILENAME,
+                ProxyNetworkConfig.class);
+        if (credentials.size() != configs.size()) {
             throw new IllegalArgumentException(
                     "Mismatch between credentials and configs length");
         }
-        for (int i = 0; i < configs.length; i++) {
-            cache.add(new ProxyConfigHolder(configs[i], credentials[i]));
+        for (int i = 0; i < configs.size(); i++) {
+            cache.add(new ProxyConfigHolder(configs.poll(), credentials.poll()));
         }
     }
 

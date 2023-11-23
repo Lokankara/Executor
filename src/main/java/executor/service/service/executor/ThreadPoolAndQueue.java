@@ -1,93 +1,53 @@
 package executor.service.service.executor;
 
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-public class ThreadPoolAndQueue {
-    private static final int QUEUE_CAPACITY = 10;
-    private static final Queue<String> SCENARIO_QUEUE =
-            new LinkedBlockingQueue<>(QUEUE_CAPACITY);
-    private static final Queue<String> PROXY_QUEUE =
-            new LinkedBlockingQueue<>(QUEUE_CAPACITY);
 
-    private static final CountDownLatch COL = new CountDownLatch(8);
+public class ThreadPoolAndQueue {
+
+    protected static final CountDownLatch COL = new CountDownLatch(8);
 
     public void threadAndQueue()
             throws Exception {
-
+        ExecutorService workerExecutor;
         ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-        Runnable qaSendScenarios = () -> {
-            System.out.println(Thread.currentThread().getName() + " QA submit");
-            for (int i = 0; i < 10; i++) {
-                String scenario = "Scenario " + i;
-                SCENARIO_QUEUE.add(scenario);
-                try {
-                    TimeUnit.SECONDS.sleep(2);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-            COL.countDown();
-        };
-
-        Runnable proxyParsing = () -> {
-            System.out.println(Thread.currentThread()
-                                     .getName() + " Started proxy submit");
-            for (int i = 0; i < 10; i++) {
-                String proxy = "Proxy " + i;
-                PROXY_QUEUE.add(proxy);
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-            COL.countDown();
-        };
-
-        executorService.execute(qaSendScenarios);
-        executorService.execute(proxyParsing);
+        Runnable taskSubmitter = Runner.getTaskSubmitter(COL);
+        executorService.execute(taskSubmitter);
 
         TimeUnit.SECONDS.sleep(1);
 
         int workers = 6;
-        for (int i = 1; i <= workers; i++) {
-            ExecutorService workerExecutor =
-                    Executors.newSingleThreadExecutor();
-            Runnable worker = () -> {
-                for (int j = 0; j < 10; j++) {
-                    String proxy = PROXY_QUEUE.poll();
-                    if (proxy == null) {
-                        continue;
-                    }
-                    String scenario = SCENARIO_QUEUE.poll();
+        workerExecutor = Executors.newFixedThreadPool(workers);
 
-                    System.out.printf("Worker: %s %s %s%n",
-                                      Thread.currentThread().getName(),
-                                      proxy,
-                                      scenario);
-
-                    try {
-                        TimeUnit.SECONDS.sleep(4);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+        List<Future<Void>> futures = new ArrayList<>();
+        for (int i = 0; i < workers; i++) {
+            futures.add(workerExecutor.submit(() -> {
+                try {
+                    Runner.start();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } finally {
+                    COL.countDown();
                 }
-                COL.countDown();
-            };
-            workerExecutor.execute(worker);
-            workerExecutor.shutdown();
-            workerExecutor.awaitTermination(10, TimeUnit.SECONDS);
+                return null;
+            }));
         }
 
-        COL.await();
+        for (Future<Void> future : futures) {
+            future.get();
+        }
 
         executorService.shutdown();
+        workerExecutor.shutdown();
+
         executorService.awaitTermination(10, TimeUnit.SECONDS);
+        workerExecutor.awaitTermination(10, TimeUnit.SECONDS);
     }
 }

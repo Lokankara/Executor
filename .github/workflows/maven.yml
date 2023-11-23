@@ -39,14 +39,24 @@ jobs:
           repository: Lokankara/Report
           path: target-repo
 
-      - name: Copy Jacoco site
-        run: cp -r jacoco-site/* target-repo/
+      - name: Show site directory
+        run: ls -la target/site/jacoco/
 
-      - name: Push changes to target repository
+      - name: Check if jacoco-site directory exists and is not empty
+        id: check_dir
         run: |
-          cd target-repo
-          git config --global user.email "poliyakpavlo@gmail.com"
-          git config --global user.name "Lokankara"
-          git add .
-          git commit -m "Add Jacoco report"
-          git push
+          if [ -d "target/site/jacoco/" ] && [ "$(ls -A target/site/jacoco/)" ]; then
+            echo "dir_exists=true" >> $GITHUB_ENV
+          else
+            echo "dir_exists=false" >> $GITHUB_ENV
+          fi
+            
+          if [ "$dir_exists" = "true" ]; then
+            cd target-repo
+            cp -r ../target/site/jacoco/* .
+            git config --global user.email "poliyakpavlo@gmail.com"
+            git config --global user.name "Lokankara"
+            git add .
+            git diff --quiet && git diff --staged --quiet || (git commit -m "Add Jacoco report"; git push)
+          fi
+          
