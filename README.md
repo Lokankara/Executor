@@ -46,7 +46,7 @@ Report with Jacoco Tool with Coverage
 `mvn clean test jacoco:report`
 
 worker has 2 objects scenario + proxy - listener
-if have 2: init driver, chrome + with config proxy (IP, username password)
+if you have 2: init driver, chrome + with config proxy (IP, username password)
 chrome execute scenario
 worker run async stream
 work diff queue for multi must be multi-thread queue
