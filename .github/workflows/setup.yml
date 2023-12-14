@@ -1,0 +1,19 @@
+name: Setup Environment (SSH, Java 17, Maven, GUI, VNC, Chrome)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup-environment:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run setup script
+      run: |
+        chmod +x setup.sh
+        ./setup.sh
